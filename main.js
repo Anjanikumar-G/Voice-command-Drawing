@@ -131,5 +131,15 @@ function drawStar(x, y, npoints, radius1, radius2) {
     sy = y + sin(a + halfAngle) * radius1;
     vertex(sx, sy);
   }
+  function drawPolygon(x, y, npoints, radius) {
+  let angle = TWO_PI / npoints;
+  beginShape();
+  for (let a = 0; a < TWO_PI; a += angle) {
+    let sx = x + cos(a) * radius;
+    let sy = y + sin(a) * radius;
+    vertex(sx, sy);
+  }
+  endShape(CLOSE);
+}
   endShape(CLOSE);
 }

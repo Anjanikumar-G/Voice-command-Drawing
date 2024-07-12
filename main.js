@@ -133,6 +133,7 @@ function drawStar(x, y, npoints, radius1, radius2) {
   }
   endShape(CLOSE);
 }
+
   function drawPolygon(x, y, npoints, radius) {
   let angle = TWO_PI / npoints;
   beginShape();

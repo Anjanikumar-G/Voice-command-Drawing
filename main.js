@@ -1,5 +1,5 @@
-let x = 0;
-let y = 0;
+let x = 0; // Initialize x coordinate
+let y = 0; // Initialize y coordinate
 let draw_circle = "";
 let draw_rect = "";
 let draw_triangle = "";
@@ -7,8 +7,8 @@ let draw_square = "";
 let draw_parallelogram = "";
 let draw_star = "";
 let draw_pentagon = "";
-let draw_octagon = "";
 let draw_hexagon = "";
+let draw_octagon = "";
 
 const recognition = new window.webkitSpeechRecognition();
 
@@ -46,8 +46,7 @@ recognition.onresult = function (event) {
   } else if (content === "star") {
     document.getElementById("status").innerHTML = "Started drawing star";
     draw_star = "set";
-  }
-  else if (content === "pentagon") {
+  } else if (content === "pentagon") {
     document.getElementById("status").innerHTML = "Started drawing pentagon";
     draw_pentagon = "set";
   } else if (content === "hexagon") {
@@ -100,6 +99,7 @@ function draw() {
     document.getElementById("status").innerHTML = "Star is drawn.";
     draw_star = "";
   }
+
   if (draw_pentagon === "set") {
     drawPolygon(x, y, 5, 50);
     document.getElementById("status").innerHTML = "Pentagon is drawn.";
@@ -134,12 +134,13 @@ function drawStar(x, y, npoints, radius1, radius2) {
   endShape(CLOSE);
 }
 
-  function drawPolygon(x, y, npoints, radius) {
+function drawPolygon(x, y, npoints, radius) {
   let angle = TWO_PI / npoints;
   beginShape();
-  for (let a = 0; a < TWO_PI; a += angle) {
-    let sx = x + cos(a) * radius;
-    let sy = y + sin(a) * radius;
+  for (let i = 0; i < npoints; i++) {
+    let theta = i * angle;
+    let sx = x + cos(theta) * radius;
+    let sy = y + sin(theta) * radius;
     vertex(sx, sy);
   }
   endShape(CLOSE);

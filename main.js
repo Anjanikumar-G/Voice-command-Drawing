@@ -6,6 +6,9 @@ let draw_triangle = "";
 let draw_square = "";
 let draw_parallelogram = "";
 let draw_star = "";
+let draw_pentagon = "";
+let draw_octagon = "";
+let draw_hexagon = "";
 
 const recognition = new window.webkitSpeechRecognition();
 
@@ -43,6 +46,16 @@ recognition.onresult = function (event) {
   } else if (content === "star") {
     document.getElementById("status").innerHTML = "Started drawing star";
     draw_star = "set";
+  }
+  else if (content === "pentagon") {
+    document.getElementById("status").innerHTML = "Started drawing pentagon";
+    draw_pentagon = "set";
+  } else if (content === "hexagon") {
+    document.getElementById("status").innerHTML = "Started drawing hexagon";
+    draw_hexagon = "set";
+  } else if (content === "octagon") {
+    document.getElementById("status").innerHTML = "Started drawing octagon";
+    draw_octagon = "set";
   }
 };
 
@@ -86,6 +99,23 @@ function draw() {
     drawStar(x, y, 5, 50, 25);
     document.getElementById("status").innerHTML = "Star is drawn.";
     draw_star = "";
+  }
+  if (draw_pentagon === "set") {
+    drawPolygon(x, y, 5, 50);
+    document.getElementById("status").innerHTML = "Pentagon is drawn.";
+    draw_pentagon = "";
+  }
+
+  if (draw_hexagon === "set") {
+    drawPolygon(x, y, 6, 50);
+    document.getElementById("status").innerHTML = "Hexagon is drawn.";
+    draw_hexagon = "";
+  }
+
+  if (draw_octagon === "set") {
+    drawPolygon(x, y, 8, 50);
+    document.getElementById("status").innerHTML = "Octagon is drawn.";
+    draw_octagon = "";
   }
 }
 

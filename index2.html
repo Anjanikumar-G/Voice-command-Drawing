@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Recognition Drawing</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <div id="status">System is listening, please speak...</div>
+
+    <script>
+        let x = 0;
+        let y = 0;
+        let draw_circle = "";
+        let draw_rect = "";
+        let draw_triangle = "";
+        let draw_square = "";
+        let draw_parallelogram = "";
+        let draw_star = "";
+        let draw_pentagon = "";
+        let draw_hexagon = "";
+        let draw_octagon = "";
+
+        const recognition = new window.webkitSpeechRecognition();
+
+        function start() {
+            document.getElementById("status").innerHTML = "System is listening, please speak...";
+            recognition.start();
+        }
+
+        recognition.onresult = function(event) {
+            const content = event.results[0][0].transcript.toLowerCase();
+            document.getElementById("status").innerHTML = "The speech has been recognized as: " + content;
+
+            x = Math.floor(Math.random() * 900);
+            y = Math.floor(Math.random() * 600);
+
+            if (content === "circle") {
+                draw_circle = "set";
+            } else if (content === "rectangle") {
+                draw_rect = "set";
+            } else if (content === "triangle") {
+                draw_triangle = "set";
+            } else if (content === "square") {
+                draw_square = "set";
+            } else if (content === "parallelogram") {
+                draw_parallelogram = "set";
+            } else if (content === "star") {
+                draw_star = "set";
+            } else if (content === "pentagon") {
+                draw_pentagon = "set";
+            } else if (content === "hexagon") {
+                draw_hexagon = "set";
+            } else if (content === "octagon") {
+                draw_octagon = "set";
+            } else if (content === "cube") {
+                drawCube();
+            }
+        };
+
+        function setup() {
+            createCanvas(900, 600);
+            initThree(); // Initialize Three.js scene
+        }
+
+        function draw() {
+            // 2D shapes drawing logic
+            if (draw_circle === "set") {
+                // draw circle logic
+            }
+            // Add other 2D shapes drawing logic
+
+            // No need to handle 3D shapes drawing in draw(), as they're handled directly in their respective draw functions (e.g., drawCube())
+        }
+
+        // Three.js setup
+        let scene, camera, renderer;
+
+        function initThree() {
+            scene = new THREE.Scene();
+
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+        }
+
+        function drawCube() {
+            let geometry = new THREE.BoxGeometry(1, 1, 1);
+            let material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+            let cube = new THREE.Mesh(geometry, material);
+            scene.add(cube);
+            cube.position.set(x, y, 0); // Adjust position as needed
+            renderer.render(scene, camera);
+            document.getElementById("status").innerHTML = "Cube is drawn.";
+        }
+    </script>
+
+    <button onclick="start()">Start Recognition</button>
+</body>
+</html>

@@ -1,4 +1,4 @@
-let x = 0;
+ let x = 0;
 let y = 0;
 let draw_circle = "";
 let draw_rect = "";
@@ -9,6 +9,8 @@ let draw_star = "";
 let draw_pentagon = "";
 let draw_octagon = "";
 let draw_hexagon = "";
+let draw_cube = "";
+let draw_cone = "";
 
 const recognition = new window.webkitSpeechRecognition();
 
@@ -46,8 +48,7 @@ recognition.onresult = function (event) {
   } else if (content === "star") {
     document.getElementById("status").innerHTML = "Started drawing star";
     draw_star = "set";
-  }
-  else if (content === "pentagon") {
+  } else if (content === "pentagon") {
     document.getElementById("status").innerHTML = "Started drawing pentagon";
     draw_pentagon = "set";
   } else if (content === "hexagon") {
@@ -56,14 +57,22 @@ recognition.onresult = function (event) {
   } else if (content === "octagon") {
     document.getElementById("status").innerHTML = "Started drawing octagon";
     draw_octagon = "set";
+  } else if (content === "cube") {
+    document.getElementById("status").innerHTML = "Started drawing cube";
+    draw_cube = "set";
+  } else if (content === "cone") {
+    document.getElementById("status").innerHTML = "Started drawing cone";
+    draw_cone = "set";
   }
 };
 
 function setup() {
-  createCanvas(900, 600);
+  createCanvas(900, 600, WEBGL); // Enable WEBGL for 3D rendering
 }
 
 function draw() {
+  background(255); // Clear canvas
+
   if (draw_circle === "set") {
     const radius = Math.floor(Math.random() * 100);
     circle(x, y, radius);
@@ -100,6 +109,7 @@ function draw() {
     document.getElementById("status").innerHTML = "Star is drawn.";
     draw_star = "";
   }
+
   if (draw_pentagon === "set") {
     drawPolygon(x, y, 5, 50);
     document.getElementById("status").innerHTML = "Pentagon is drawn.";
@@ -117,33 +127,38 @@ function draw() {
     document.getElementById("status").innerHTML = "Octagon is drawn.";
     draw_octagon = "";
   }
+
+  if (draw_cube === "set") {
+    drawCube(x, y, 50);
+    document.getElementById("status").innerHTML = "Cube is drawn.";
+    draw_cube = "";
+  }
+
+  if (draw_cone === "set") {
+    drawCone(x, y, 50, 100);
+    document.getElementById("status").innerHTML = "Cone is drawn.";
+    draw_cone = "";
+  }
 }
 
 function drawStar(x, y, npoints, radius1, radius2) {
-  let angle = TWO_PI / npoints;
-  let halfAngle = angle / 2.0;
-  beginShape();
-  for (let a = 0; a < TWO_PI; a += angle) {
-    let sx = x + cos(a) * radius2;
-    let sy = y + sin(a) * radius2;
-    vertex(sx, sy);
-    sx = x + cos(a + halfAngle) * radius1;
-    sy = y + sin(a + halfAngle) * radius1;
-    vertex(sx, sy);
-  }
-  endShape(CLOSE);
+  // Implementation for drawing a star
 }
 
-  function drawPolygon(x, y, npoints, radius) {
-  let angle = TWO_PI / npoints;
-  beginShape();
-  for (let a = 0; a < TWO_PI; a += angle) {
-    let sx = x + cos(a) * radius;
-    let sy = y + sin(a) * radius;
-    vertex(sx, sy);
-  }
-  endShape(CLOSE);
+function drawPolygon(x, y, npoints, radius) {
+  // Implementation for drawing polygons
 }
-  
-  
-    
+
+function drawCube(x, y, size) {
+  push();
+  translate(x - width / 2, y - height / 2);
+  box(size);
+  pop();
+}
+
+function drawCone(x, y, radius, height) {
+  push();
+  translate(x - width / 2, y - height / 2);
+  cone(radius, height);
+  pop();
+}

@@ -1,4 +1,4 @@
- let x = 0;
+let x = 0;
 let y = 0;
 let draw_circle = "";
 let draw_rect = "";
@@ -75,55 +75,71 @@ function draw() {
 
   if (draw_circle === "set") {
     const radius = Math.floor(Math.random() * 100);
-    circle(x, y, radius);
+    circle(x - width / 2, y - height / 2, radius);
     document.getElementById("status").innerHTML = "Circle is drawn.";
     draw_circle = "";
   }
 
   if (draw_rect === "set") {
-    rect(x, y, 100, 50);
+    rect(x - width / 2, y - height / 2, 100, 50);
     document.getElementById("status").innerHTML = "Rectangle is drawn.";
     draw_rect = "";
   }
 
   if (draw_triangle === "set") {
-    triangle(x, y, x + 50, y - 100, x + 100, y);
+    triangle(
+      x - width / 2,
+      y - height / 2,
+      x - width / 2 + 50,
+      y - height / 2 - 100,
+      x - width / 2 + 100,
+      y - height / 2
+    );
     document.getElementById("status").innerHTML = "Triangle is drawn.";
     draw_triangle = "";
   }
 
   if (draw_square === "set") {
-    rect(x, y, 100, 100);
+    rect(x - width / 2, y - height / 2, 100, 100);
     document.getElementById("status").innerHTML = "Square is drawn.";
     draw_square = "";
   }
 
   if (draw_parallelogram === "set") {
-    quad(x, y, x + 150, y, x + 100, y + 100, x - 50, y + 100);
+    quad(
+      x - width / 2,
+      y - height / 2,
+      x - width / 2 + 150,
+      y - height / 2,
+      x - width / 2 + 100,
+      y - height / 2 + 100,
+      x - width / 2 - 50,
+      y - height / 2 + 100
+    );
     document.getElementById("status").innerHTML = "Parallelogram is drawn.";
     draw_parallelogram = "";
   }
 
   if (draw_star === "set") {
-    drawStar(x, y, 5, 50, 25);
+    drawStar(x - width / 2, y - height / 2, 5, 50, 25);
     document.getElementById("status").innerHTML = "Star is drawn.";
     draw_star = "";
   }
 
   if (draw_pentagon === "set") {
-    drawPolygon(x, y, 5, 50);
+    drawPolygon(x - width / 2, y - height / 2, 5, 50);
     document.getElementById("status").innerHTML = "Pentagon is drawn.";
     draw_pentagon = "";
   }
 
   if (draw_hexagon === "set") {
-    drawPolygon(x, y, 6, 50);
+    drawPolygon(x - width / 2, y - height / 2, 6, 50);
     document.getElementById("status").innerHTML = "Hexagon is drawn.";
     draw_hexagon = "";
   }
 
   if (draw_octagon === "set") {
-    drawPolygon(x, y, 8, 50);
+    drawPolygon(x - width / 2, y - height / 2, 8, 50);
     document.getElementById("status").innerHTML = "Octagon is drawn.";
     draw_octagon = "";
   }
@@ -142,23 +158,41 @@ function draw() {
 }
 
 function drawStar(x, y, npoints, radius1, radius2) {
-  // Implementation for drawing a star
+  let angle = TWO_PI / npoints;
+  let halfAngle = angle / 2.0;
+  beginShape();
+  for (let a = 0; a < TWO_PI; a += angle) {
+    let sx = x + cos(a) * radius2;
+    let sy = y + sin(a) * radius2;
+    vertex(sx, sy);
+    sx = x + cos(a + halfAngle) * radius1;
+    sy = y + sin(a + halfAngle) * radius1;
+    vertex(sx, sy);
+  }
+  endShape(CLOSE);
 }
 
 function drawPolygon(x, y, npoints, radius) {
-  // Implementation for drawing polygons
+  let angle = TWO_PI / npoints;
+  beginShape();
+  for (let a = 0; a < TWO_PI; a += angle) {
+    let sx = x + cos(a) * radius;
+    let sy = y + sin(a) * radius;
+    vertex(sx, sy);
+  }
+  endShape(CLOSE);
 }
 
 function drawCube(x, y, size) {
   push();
-  translate(x - width / 2, y - height / 2);
+  translate(x - width / 2, y - height / 2, -50); // Position the cube correctly
   box(size);
   pop();
 }
 
 function drawCone(x, y, radius, height) {
   push();
-  translate(x - width / 2, y - height / 2);
+  translate(x - width / 2, y - height / 2, -50); // Position the cone correctly
   cone(radius, height);
   pop();
 }
